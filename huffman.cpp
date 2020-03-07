@@ -69,22 +69,21 @@ void write_to_file(){
 void calculateHuffmanCode(){
     priority_queue<node*, vector<node*>, comparator> mylist;
 
-    for(auto const & x : freq){
-    //    cout<<x.first<<" "<<x.second<<endl;
+    for(auto const &x : freq){
         mylist.push(new node(x.first, x.second));
     }
-    node* lowest;
-    node* sec_lowest;
+
     while(mylist.size()>=2){
-        lowest = mylist.top();
+        node* lowest = mylist.top();
         mylist.pop();
-        sec_lowest = mylist.top();
+        node* sec_lowest = mylist.top();
         mylist.pop();
         node* combined  = new node('*', lowest->count + sec_lowest->count);
         combined->left = lowest;
         combined->right = sec_lowest;
         mylist.push(combined);
     }
+
     store_codes(mylist.top(), "");
     write_to_file();
     encode_input();
