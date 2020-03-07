@@ -1,24 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef pair<char, int> pair2;
-typedef pair<string, char> pairsc;
-typedef pair<char, string> paircs;
-
 string line;
 map<char, int> freq;
 map<string, char> mappings;
 map<char, string> encod_map;
 
 class node{
-    public:
+public:
     node* left;
     node* right;
     char data;
     int count;
-    node(char c, int freq){
+    node(char c, int frequency){
         data = c;
-        count = freq;
+        count = frequency;
         left = NULL;
         right = NULL;
     }
@@ -40,9 +36,8 @@ void store_codes(node *a, string s){
         store_codes(a->right, s+'1');
     }
     else{
-       mappings.insert(pairsc(s, a->data));
-       encod_map.insert(paircs(a->data, s));
-        cout<<a->data<<": "<<s<<endl;
+        mappings.insert({s, a->data});
+        encod_map.insert({a->data, s});
     }
 }
 
@@ -50,8 +45,8 @@ void encode_input(){
     ofstream myfile ("output.txt");
     if (myfile.is_open()){
         for (char &c : line){
-                myfile<<encod_map[c];
-            }
+            myfile << encod_map[c];
+        }
     }
     myfile.close();
 }
@@ -59,8 +54,8 @@ void encode_input(){
 void write_to_file(){
     ofstream myfile ("mappings.txt");
     if (myfile.is_open()){
-        for(auto const & x : mappings){
-            myfile<<x.second<<x.first<<endl;
+        for(auto const &x : mappings){
+            myfile << x.second << x.first << endl;
         }
     }
     myfile.close();
