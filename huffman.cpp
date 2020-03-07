@@ -1,11 +1,10 @@
-# include <bits/stdc++.h>
-#include<iostream>
-
-
+#include <bits/stdc++.h>
 using namespace std;
+
 typedef pair<char, int> pair2;
 typedef pair<string, char> pairsc;
 typedef pair<char, string> paircs;
+
 string line;
 map<char, int> freq;
 map<string, char> mappings;
@@ -69,7 +68,7 @@ void write_to_file(){
 
 void calculateHuffmanCode(){
     priority_queue<node*, vector<node*>, comparator> mylist;
-     
+
     for(auto const & x : freq){
     //    cout<<x.first<<" "<<x.second<<endl;
         mylist.push(new node(x.first, x.second));
@@ -92,25 +91,13 @@ void calculateHuffmanCode(){
 }
 
 int main(){
-    
-    
     ifstream myfile("input.txt");
+
     if (myfile.is_open()){
         getline (myfile, line);
-            cout<<line<<endl;
-            for (char &c : line){
-                if (freq.count(c)>0){
-                    freq[c] += 1;
-                }
-                else{
-                    freq.insert(pair2(c,1));
-                }
-            }
-            
-        
+        for (char &c : line) ++freq[c];
         calculateHuffmanCode();
- 
     }
+
     myfile.close();
-    return 0;
 }
