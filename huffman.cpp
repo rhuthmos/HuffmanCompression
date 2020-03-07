@@ -61,7 +61,7 @@ void write_to_file(){
     ofstream myfile ("mappings.txt");
     if (myfile.is_open()){
         for(auto const & x : mappings){
-            myfile<<x.first<<'8'<<x.second<<endl;
+            myfile<<x.second<<x.first<<endl;
         }
     }
     myfile.close();
