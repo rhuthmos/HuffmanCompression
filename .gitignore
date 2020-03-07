@@ -1,0 +1,1 @@
+git rm --cached mappings.txt a.out output.txt
