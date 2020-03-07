@@ -71,7 +71,7 @@ void calculateHuffmanCode(){
     priority_queue<node*, vector<node*>, comparator> mylist;
      
     for(auto const & x : freq){
-        cout<<x.first<<" "<<x.second<<endl;
+    //    cout<<x.first<<" "<<x.second<<endl;
         mylist.push(new node(x.first, x.second));
     }
     node* lowest;
@@ -109,7 +109,7 @@ int main(){
             
         
         calculateHuffmanCode();
-        cout<<"Mota Bhai Ram Ram\n";
+ 
     }
     myfile.close();
     return 0;
