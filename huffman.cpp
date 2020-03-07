@@ -20,13 +20,6 @@ public:
     }
 };
 
-struct comparator{
-    bool operator()(node* const& a , node* const& b){
-        return a->count > b->count ;
-    }
-};
-
-
 void store_codes(node *a, string s){
     if (a == NULL){
         return;
@@ -62,7 +55,8 @@ void write_to_file(){
 }
 
 void calculateHuffmanCode(){
-    priority_queue<node*, vector<node*>, comparator> mylist;
+    auto cmp = [](node* const& a, node* const& b) { return a->count > b->count; };
+    priority_queue<node*, vector<node*>, decltype(cmp)> mylist(cmp);
 
     for(auto const &x : freq){
         mylist.push(new node(x.first, x.second));
