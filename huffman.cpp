@@ -1,15 +1,12 @@
 # include <bits/stdc++.h>
-#include<iostream>
-
-
 using namespace std;
-typedef pair<char, int> pair2;
-typedef pair<string, char> pairsc;
-typedef pair<char, string> paircs;
+
 string line;
 map<char, int> freq;
 map<string, char> mappings;
 map<char, string> encod_map;
+
+int aat = 0, su;
 
 class node{
     public:
@@ -36,19 +33,19 @@ void store_codes(node *a, string s){
     if (a == NULL){
         return;
     }
-    if (a->data == '*'){
+    if (a->data == '\n'){
         store_codes(a->left, s+'0');
         store_codes(a->right, s+'1');
     }
     else{
-       mappings.insert(pairsc(s, a->data));
-       encod_map.insert(paircs(a->data, s));
-        cout<<a->data<<": "<<s<<endl;
+        mappings.insert({s, a->data});
+        encod_map.insert({a->data, s});
+        aat += a->count * s.size();
     }
 }
 
 void encode_input(){
-    ofstream myfile ("output.txt");
+    ofstream myfile ("encoded.txt");
     if (myfile.is_open()){
         for (char &c : line){
                 myfile<<encod_map[c];
@@ -58,7 +55,7 @@ void encode_input(){
 }
 
 void write_to_file(){
-    ofstream myfile ("mappings.txt");
+    ofstream myfile ("mapping.txt");
     if (myfile.is_open()){
         for(auto const & x : mappings){
             myfile<<x.second<<x.first<<endl;
@@ -71,9 +68,9 @@ void calculateHuffmanCode(){
     priority_queue<node*, vector<node*>, comparator> mylist;
      
     for(auto const & x : freq){
-    //    cout<<x.first<<" "<<x.second<<endl;
         mylist.push(new node(x.first, x.second));
     }
+
     node* lowest;
     node* sec_lowest;
     while(mylist.size()>=2){
@@ -81,36 +78,36 @@ void calculateHuffmanCode(){
         mylist.pop();
         sec_lowest = mylist.top();
         mylist.pop();
-        node* combined  = new node('*', lowest->count + sec_lowest->count);
+        node* combined  = new node('\n', lowest->count + sec_lowest->count);
         combined->left = lowest;
         combined->right = sec_lowest;
         mylist.push(combined);
     }
+    su = mylist.top()->count;
+
     store_codes(mylist.top(), "");
+
+    double res = (double)aat / su;
+    cout << "Huffman Encoding ==> Average Access Time = " << res << endl; 
+
     write_to_file();
     encode_input();
 }
 
 int main(){
-    
-    
     ifstream myfile("input.txt");
     if (myfile.is_open()){
         getline (myfile, line);
-            cout<<line<<endl;
-            for (char &c : line){
-                if (freq.count(c)>0){
-                    freq[c] += 1;
-                }
-                else{
-                    freq.insert(pair2(c,1));
-                }
+        for (char &c : line){
+            if (freq.count(c)>0){
+                freq[c] += 1;
             }
+            else{
+                freq.insert({c,1});
+            }
+        }
             
-        
         calculateHuffmanCode();
- 
     }
     myfile.close();
-    return 0;
 }

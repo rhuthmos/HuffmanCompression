@@ -47,7 +47,7 @@ int calculateFanoShannonCode(int bptr, int eptr, string s){
             diff = newdiff;
             cutptr = i;
         }
-        sum_till_now += freq[bptr].second;
+        sum_till_now += freq[i].second;
     }
 
     return calculateFanoShannonCode (bptr, cutptr, s+'0')
